@@ -1,0 +1,1 @@
+dotnet test "./src/TestLinkApi.NetCore.Tests/TestLinkApi.NetCore.Tests.csproj"

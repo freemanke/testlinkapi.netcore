@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>TestLink .NET Core</Title>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>TestLinkApi</RootNamespace>
+    <Authors>Freeman Ke</Authors>
+    <Company>CMIT</Company>
+    <Description>Testlink Api for .NET Core 2.1</Description>
+    <Copyright>Freeman Ke</Copyright>
+    <SignAssembly>false</SignAssembly>
+    <PackageTags>testlink xmlrpc .netcore</PackageTags>
+    <Version>1.0.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>
+      - Release for 1.0.0
+    </PackageReleaseNotes>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/freemanke/testlinkapi.netcore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/freemanke/testlinkapi.netcore.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Kveer.XmlRPC" Version="1.0.2" />
+  </ItemGroup>
+
+</Project>
