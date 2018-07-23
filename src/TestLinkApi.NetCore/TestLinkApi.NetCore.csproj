@@ -10,7 +10,7 @@
     <Copyright>Freeman Ke</Copyright>
     <SignAssembly>false</SignAssembly>
     <PackageTags>testlink xmlrpc .netcore</PackageTags>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>
       - Release for 1.2.0
