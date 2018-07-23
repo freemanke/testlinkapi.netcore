@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kveer.XmlRPC" Version="1.0.4" />
+    <PackageReference Include="Freemanke.Xmlrpc" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
