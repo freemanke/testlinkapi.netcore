@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace TestLinkApi.NetCore.Tests
 {
     public class TestLinkTest
     {
-        private const string apiKey = "79eb8aa0a0fb58902f081c857c66d63d";
+        private const string apiKey = "81d3ea057c7e10938754661577f4b2aa";
         private const string testlinkUrl = "https://dev.testlink.tp.cmit.local/lib/api/xmlrpc/v1/xmlrpc.php";
         private TestLink testlink = new TestLink(apiKey, testlinkUrl);
+        private ITestOutputHelper _testOutputHelper;
+
+        public TestLinkTest(ITestOutputHelper helper)
+        {
+            _testOutputHelper = helper;
+        }
 
         [Fact]
         public void SayHelloTest()
@@ -43,6 +50,40 @@ namespace TestLinkApi.NetCore.Tests
         [Fact]
         public void GetTestCasesForTestPlanTest()
         {
+            _testOutputHelper.WriteLine(testlink.about());
+
+            var project = testlink.GetProjects().First(a => a.name == "CMGE");
+            var testPlan = testlink.GetProjectTestPlans(project.id).First(a => a.name == "integration-test-plan");
+            _testOutputHelper.WriteLine($"test plan id: {testPlan.id}");
+
+            var platforms = testlink.GetTestPlanPlatforms(testPlan.id);
+            _testOutputHelper.WriteLine($"\r\n{testPlan.name} includes platforms:");
+            platforms.ForEach(a => _testOutputHelper.WriteLine($"{a.name} (id: {a.id})"));
+
+            var builds = testlink.GetBuildsForTestPlan(testPlan.id);
+            _testOutputHelper.WriteLine($"\r\n{testPlan.name} includes builds:");
+            builds.ForEach(a => _testOutputHelper.WriteLine($"{a.name} (id: {a.id})"));
+
+            var cases = testlink.GetTestCasesForTestPlan(testPlan.id);
+            var testCases = cases.GroupBy(a => a.external_id).Select(g => g.First()).ToList();
+            _testOutputHelper.WriteLine($"\r\n{testPlan.name} includes test cases: {testCases.Count}");
+            testCases.ForEach(a=> _testOutputHelper.WriteLine($"ID:{a.tc_id} ExternalID:{a.external_id} {a.name} {a.tester_id}"));
+
+            var platformTestCases = testCases.GroupBy(a => a.platform_name);
+            _testOutputHelper.WriteLine("\r\nGroups:");
+            var counter = 0;
+            foreach (var group in platformTestCases)
+            {
+                counter += group.ToArray().Length;
+                _testOutputHelper.WriteLine($"Platform: {group.Key} Test cases: {group.ToArray().Length}");
+            }
+
+            _testOutputHelper.WriteLine($"All platform total test cases: {counter}");
+        }
+
+        [Fact]
+        public void GetTestCasesForTestPlanOfMeTest()
+        {
             Console.WriteLine(testlink.about());
 
             var project = testlink.GetProjects().First(a => a.name == "CMGE");
@@ -56,7 +97,7 @@ namespace TestLinkApi.NetCore.Tests
             Console.WriteLine($"\r\n{testPlan.name} includes builds:");
             builds.ForEach(a => Console.WriteLine($"{a.name} (id: {a.id})"));
 
-            var cases = testlink.GetTestCasesForTestPlan(testPlan.id);
+            var cases = testlink.GetTestCasesForTestPlan(testPlan.id,0,builds[0].id,0,false,0);
             var testCases = cases.GroupBy(a => a.external_id).Select(g => g.First()).ToList();
             Console.WriteLine($"\r\n{testPlan.name} includes test cases: {testCases.Count}");
 
