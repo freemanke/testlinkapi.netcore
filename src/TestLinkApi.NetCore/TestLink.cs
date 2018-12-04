@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -898,6 +899,20 @@ namespace TestLinkApi
             handleErrorMessage(response);
             var list = response as XmlRpcStruct;
             return TestLinkData.GenerateFromResponse(list);
+        }
+
+        public string GetTestCaseAssignedTester(int testplanid, int testcaseid, int platformid, int buildId)
+        {
+            stateIsValid();
+            var response = proxy.getTestCaseAssignedTester(devkey, testplanid, testcaseid, platformid, buildId);
+            if (!((response as object[])?[0] is XmlRpcStruct list)) return string.Empty;
+            foreach (DictionaryEntry dictionaryEntry in list)
+            {
+                if ((string) dictionaryEntry.Key == "login")
+                    return dictionaryEntry.Value as string;
+            }
+
+            return string.Empty;
         }
 
         /// <summary>

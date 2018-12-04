@@ -10,10 +10,10 @@
     <Copyright>Freeman Ke</Copyright>
     <SignAssembly>false</SignAssembly>
     <PackageTags>testlink xmlrpc .netcore</PackageTags>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>
-      - Release for 1.2.0
+      - Release for 1.2.2
     </PackageReleaseNotes>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

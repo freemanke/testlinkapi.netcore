@@ -116,6 +116,9 @@ namespace TestLinkApi
         [XmlRpcMethod("tl.getTestCasesForTestPlan", StructParams = true)]
         object getTestCasesForTestPlan(string devKey, int testplanid, int testcaseid, int buildid, int keywordid, bool executed, int assignedTo, string executedstatus);
 
+        [XmlRpcMethod("tl.getTestCaseAssignedTester", StructParams = true)]
+        object getTestCaseAssignedTester(string devKey, int testplanid, int testcaseid, int platformid, int buildid);
+
         [XmlRpcMethod("tl.getTestCasesForTestSuite", StructParams = true)]
         object getTestCasesForTestSuite(string devKey, int testsuiteid);
 

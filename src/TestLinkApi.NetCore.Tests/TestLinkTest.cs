@@ -7,8 +7,8 @@ namespace TestLinkApi.NetCore.Tests
 {
     public class TestLinkTest
     {
-        private const string apiKey = "81d3ea057c7e10938754661577f4b2aa";
-        private const string testlinkUrl = "https://dev.testlink.tp.cmit.local/lib/api/xmlrpc/v1/xmlrpc.php";
+        private const string apiKey = "05f5815cabe4de0625380671ae465b97";
+        private const string testlinkUrl = "https://testlink.tp.cmit.local/lib/api/xmlrpc/v1/xmlrpc.php";
         private TestLink testlink = new TestLink(apiKey, testlinkUrl);
         private ITestOutputHelper _testOutputHelper;
 
@@ -80,6 +80,25 @@ namespace TestLinkApi.NetCore.Tests
 
             _testOutputHelper.WriteLine($"All platform total test cases: {counter}");
         }
+
+
+        [Fact]
+        public void GetTestCaseAssignedTester()
+        {
+            var testPlan = testlink.getTestPlanByName("CMGE", "MS-KB4467682-H20181130");
+            var builds = testlink.GetBuildsForTestPlan(testPlan.id);
+            var platforms = testlink.GetTestPlanPlatforms(testPlan.id);
+            foreach (var p in platforms)
+            {
+                foreach (var b in builds)
+                {
+                    var tester = testlink.GetTestCaseAssignedTester(testPlan.id, 26174, p.id, b.id);
+                    _testOutputHelper.WriteLine(tester);
+                }
+            }
+           
+        }
+
 
         [Fact]
         public void GetTestCasesForTestPlanOfMeTest()
