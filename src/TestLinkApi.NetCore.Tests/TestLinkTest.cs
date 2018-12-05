@@ -85,18 +85,21 @@ namespace TestLinkApi.NetCore.Tests
         [Fact]
         public void GetTestCaseAssignedTester()
         {
-            var testPlan = testlink.getTestPlanByName("CMGE", "MS-KB4467682-H20181130");
+            var testPlan = testlink.getTestPlanByName("CMGE", "integration-test-plan");
+            var testcases = testlink.GetTestCasesForTestPlan(testPlan.id);
             var builds = testlink.GetBuildsForTestPlan(testPlan.id);
             var platforms = testlink.GetTestPlanPlatforms(testPlan.id);
-            foreach (var p in platforms)
+            foreach (var tc in testcases)
             {
-                foreach (var b in builds)
+                foreach (var p in platforms)
                 {
-                    var tester = testlink.GetTestCaseAssignedTester(testPlan.id, 26174, p.id, b.id);
-                    _testOutputHelper.WriteLine(tester);
+                    foreach (var b in builds)
+                    {
+                        var tester = testlink.GetTestCaseAssignedTester(testPlan.id, tc.tc_id, p.id, b.id);
+                        _testOutputHelper.WriteLine(tester);
+                    }
                 }
             }
-           
         }
 
 
