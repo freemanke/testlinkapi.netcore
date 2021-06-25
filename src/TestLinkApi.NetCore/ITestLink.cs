@@ -156,6 +156,9 @@ namespace TestLinkApi
         [XmlRpcMethod("tl.uploadTestSuiteAttachment", StructParams = true)]
         object uploadTestSuiteAttachment(string devKey, int testsuiteid, string filename, string fileType, string content, string title, string description);
 
+        [XmlRpcMethod("tl.getTestSuiteAttachments", StructParams = true)]
+        object getTestSuiteAttachments(string devKey, int testsuiteid);
+
         #endregion
 
         #region execution

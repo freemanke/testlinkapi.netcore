@@ -788,7 +788,28 @@ namespace TestLinkApi
             return result;
         }
 
+        /// <summary>
+        /// retrieve the attachments for a test suite
+        /// </summary>
+        /// <param name="testSuiteId"></param>
+        /// <returns></returns>
+        public List<Attachment> GetTestSuiteAttachments(int testSuiteId)
+        {
+            stateIsValid();
+            var o = proxy.getTestSuiteAttachments(devkey, testSuiteId);
+            handleErrorMessage(o);
+            var result = new List<Attachment>();
+            var olist = o as XmlRpcStruct;
+            if (olist != null)
+                foreach (XmlRpcStruct item in olist.Values)
+                {
+                    var a = TestLinkData.ToAttachment(item);
+                    result.Add(a);
+                }
 
+            return result;
+        }
+               
         #region getTestCasesForTestPlan
 
         /// <summary>
