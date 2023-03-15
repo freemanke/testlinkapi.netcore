@@ -253,12 +253,12 @@ namespace TestLinkApi
             return null;
         }
 
-        /// <summary>
-        /// get the newest build for a test plan
-        /// </summary>
-        /// <param name="tplanid">id of testplan</param>
-        /// <returns>a build object</returns>
-        public Build GetLatestBuildForTestPlan(int tplanid)
+		/// <summary>
+		/// get the newest build for a test plan
+		/// </summary>
+		/// <param name="tplanid">id of testplan</param>
+		/// <returns>a build object</returns>
+		public Build GetLatestBuildForTestPlan(int tplanid)
         {
             stateIsValid();
             var response = proxy.getLatestBuildForTestPlan(devkey, tplanid);
@@ -424,15 +424,42 @@ namespace TestLinkApi
             return null;
         }
 
-        #endregion
+		/// <summary>
+		/// get the last execution result
+		/// </summary>
+		/// <param name="testplanid">id of the test plan</param>
+		/// <param name="testcaseid">id of test case</param>
+		/// <param name="buildid">id of build</param>
+		/// <returns>a ExecutionResult or null</returns>
+		public ExecutionResult GetLastExecutionResult(int testplanid, int testcaseid, int buildid) {
+			stateIsValid();
+			var response = proxy.getLastExecutionResult(devkey, testplanid, testcaseid, buildid);
+
+			var result = new List<ExecutionResult>();
+			if (response.Length == 0 || response[0] is int) // that signifies no execution results
+				return null;
+
+			handleErrorMessage(response);
+			if (response != null)
+				foreach (XmlRpcStruct data in response) {
+					var id = data["id"];
+					if (id is int && (int)id == -1)
+						return null; // -1 means no result
+					return TestLinkData.ToExecutionResult(data);
+				}
+
+			return null;
+		}
+
+#endregion
 
 
-        /// <summary>
-        /// delete an execution. Current status this API is not fully functioning as it is not clear how to configure testlink to allow this to happen
-        /// </summary>
-        /// <param name="executionid">the id of the test case execution</param>
-        /// <returns>a GeneralResult</returns>
-        public GeneralResult DeleteExecution(int executionid)
+		/// <summary>
+		/// delete an execution. Current status this API is not fully functioning as it is not clear how to configure testlink to allow this to happen
+		/// </summary>
+		/// <param name="executionid">the id of the test case execution</param>
+		/// <returns>a GeneralResult</returns>
+		public GeneralResult DeleteExecution(int executionid)
         {
             stateIsValid();
             var o = proxy.deleteExecution(devkey, executionid);

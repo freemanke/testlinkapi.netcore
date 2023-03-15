@@ -163,7 +163,10 @@ namespace TestLinkApi
         [XmlRpcMethod("tl.getLastExecutionResult", StructParams = true)]
         object[] getLastExecutionResult(string devKey, int testplanid, int testcaseid);
 
-        [XmlRpcMethod("tl.reportTCResult", StructParams = true)]
+		[XmlRpcMethod("tl.getLastExecutionResult", StructParams = true)]
+		object[] getLastExecutionResult(string devKey, int testplanid, int testcaseid, int buildid);
+        
+		[XmlRpcMethod("tl.reportTCResult", StructParams = true)]
         object reportTCResult(string devKey, int testcaseid, int testplanid, string status, int platformid, bool overwrite, string notes, bool guess, int bugid, int buildid);
 
         [XmlRpcMethod("tl.reportTCResult", StructParams = true)]
